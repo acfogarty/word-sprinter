@@ -9,5 +9,5 @@ To build:
 
 To run:
 ```
-python sprinter.py
+python main.py
 ```

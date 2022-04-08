@@ -29,9 +29,9 @@
        <item>
         <layout class="QFormLayout" name="formLayout">
          <item row="0" column="0">
-          <widget class="QLabel" name="minutes_per_session_label">
+          <widget class="QLabel" name="minutes_per_sprint_label">
            <property name="text">
-            <string>Minutes per session</string>
+            <string>Minutes per sprint</string>
            </property>
            <property name="wordWrap">
             <bool>true</bool>
@@ -39,7 +39,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QSpinBox" name="minutes_per_session_spinbox"/>
+          <widget class="QSpinBox" name="minutes_per_sprint_spinbox"/>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="target_wordcount_label">
