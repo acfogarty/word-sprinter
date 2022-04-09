@@ -7,7 +7,7 @@ from PyQt5.QtCore import QObject, QThread, pyqtSignal, QMutex
 from sprinter import Ui_MainWindow
 from session import Session
 from text import Text
-from utils import make_darktheme_palette
+from utils import make_darktheme_palette, make_alarm_palette
 
 
 class Worker(QObject):
@@ -48,7 +48,14 @@ class Worker(QObject):
 
 class Main:
 
-    def __init__(self):
+    def __init__(self, app):
+
+        self.app = app
+
+        # Force the style to be the same on all OSs:
+        self.app.setStyle("Fusion")
+        palette = make_darktheme_palette()
+        self.app.setPalette(palette)
 
         self.ui = None
         self.session = None
@@ -63,6 +70,9 @@ class Main:
         self.ui.start_button.clicked.connect(self.start_session_in_thread)
 
     def start_session_in_thread(self):
+
+        palette = make_alarm_palette()
+        self.app.setPalette(palette)
 
         minutes_per_sprint = self.ui.minutes_per_sprint_spinbox.value()
         target_wordcount = self.ui.target_wordcount_spinbox.value()
@@ -117,6 +127,8 @@ class Main:
             # update text in labels in UI
             self.update_status_bar()
 
+            self.check_alarm_condition()
+
             return
 
         if self.session.seconds_remaining <=0:
@@ -148,13 +160,9 @@ class Main:
 if __name__ == "__main__":
 
     app = QtWidgets.QApplication(sys.argv)
-    # Force the style to be the same on all OSs:
-    app.setStyle("Fusion")
-    palette = make_darktheme_palette()
-    app.setPalette(palette)
 
     MainWindow = QtWidgets.QMainWindow()
-    main = Main()
+    main = Main(app)
     main.launch(MainWindow)
     MainWindow.show()
     

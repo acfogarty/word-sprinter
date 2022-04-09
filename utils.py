@@ -3,6 +3,9 @@ from PyQt5.QtGui import QPalette, QColor
 
 
 def make_darktheme_palette():
+    """
+    Dark colour scheme for normal use
+    """
 
     palette = QPalette()
     palette.setColor(QPalette.Window, QColor(53, 53, 53))
@@ -18,5 +21,15 @@ def make_darktheme_palette():
     palette.setColor(QPalette.Link, QColor(42, 130, 218))
     palette.setColor(QPalette.Highlight, QColor(42, 130, 218))
     palette.setColor(QPalette.HighlightedText, Qt.black)
+
+    return palette
+
+def make_alarm_palette():
+    """
+    Red colour scheme for alarm state
+    """
+
+    palette = make_darktheme_palette()
+    palette.setColor(QPalette.Window, Qt.red)
 
     return palette
