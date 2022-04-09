@@ -29,7 +29,7 @@ class Session:
 
         self.calc_minutes_remaining()
 
-        self.calc_perc_wc_achieved()
+        self.calc_word_stats()
 
     def calc_minutes_remaining(self):
 
@@ -42,9 +42,11 @@ class Session:
         else:
             self.perc_time_remaining = 0
 
-    def calc_perc_wc_achieved(self):
+    def calc_word_stats(self):
+
+        self.words_remaining = self.target_wordcount - self.text.added_wordcount
 
         if self.target_wordcount > 0:
-            self.perc_wc_achieved = int(self.text.current_wordcount / self.target_wordcount * 100)
+            self.perc_wc_achieved = int(self.text.added_wordcount / self.target_wordcount * 100)
         else:
             self.perc_wc_achieved = 0

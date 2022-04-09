@@ -26,22 +26,22 @@ class Worker(QObject):
         """
         Switches infinite while loop condition to False
         """
-        self._mutex.lock()
+#       self._mutex.lock()
         self._running = False
-        self._mutex.unlock()
+#        self._mutex.unlock()
 
     def running(self):
-        try:
-            self._mutex.lock()
+        #try:
+        #    self._mutex.lock()
             return self._running
-        finally:
-            self._mutex.unlock()
+        #finally:
+        #    self._mutex.unlock()
 
     #@pyqtSlot()
     def run_session(self):
 
         while self.running():
-            time.sleep(1)
+            time.sleep(5)
             self.progress.emit(1)
         self.finished.emit()
 
@@ -90,6 +90,8 @@ class Main:
         self.thread.finished.connect(self.thread.deleteLater)
         self.worker.progress.connect(self.update_status)
 
+        self.update_status()
+
         self.thread.start()
 
         # Final resets
@@ -103,7 +105,10 @@ class Main:
 
     def update_status(self):
 
+        print('update_status')
+
         if (self.session.seconds_remaining > 0) and (self.session.words_remaining > 0):
+
             current_text_string = self.ui.textarea.toPlainText()
 
             # update all session variables
@@ -115,12 +120,12 @@ class Main:
             return
 
         if self.session.seconds_remaining <=0:
-            print('Times up!')
             self.worker.stop()
+            print('Times up!')
 
         if self.session.words_remaining <= 0:
-            print('Well done!')
             self.worker.stop()
+            print('Well done!')
 
     def update_status_bar(self):
         """

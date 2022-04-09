@@ -19,7 +19,7 @@ class Text:
         """Counts words using same method as linux wc"""
 
         # TODO
-        wc = len(text_string.split('\s+'))
+        wc = len(text_string.split())
 
         return wc
 
