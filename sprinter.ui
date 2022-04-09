@@ -39,7 +39,11 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QSpinBox" name="minutes_per_sprint_spinbox"/>
+          <widget class="QSpinBox" name="minutes_per_sprint_spinbox">
+           <property name="value">
+            <number>5</number>
+           </property>
+          </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="target_wordcount_label">
@@ -52,7 +56,11 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QSpinBox" name="target_wordcount_spinbox"/>
+          <widget class="QSpinBox" name="target_wordcount_spinbox">
+           <property name="value">
+            <number>10</number>
+           </property>
+          </widget>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="severity_label">
@@ -63,6 +71,9 @@
          </item>
          <item row="2" column="1">
           <widget class="QSlider" name="severity_slider">
+           <property name="sliderPosition">
+            <number>50</number>
+           </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>

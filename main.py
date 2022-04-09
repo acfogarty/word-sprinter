@@ -68,11 +68,9 @@ class Main:
         self.ui = Ui_MainWindow()
         self.ui.setupUi(MainWindow)
         self.ui.start_button.clicked.connect(self.start_session_in_thread)
+        self.ui.textarea.textChanged.connect(self.update_textchanged_time)
 
     def start_session_in_thread(self):
-
-        palette = make_alarm_palette()
-        self.app.setPalette(palette)
 
         minutes_per_sprint = self.ui.minutes_per_sprint_spinbox.value()
         target_wordcount = self.ui.target_wordcount_spinbox.value()
@@ -155,6 +153,32 @@ class Main:
         wc_text = f'{added_wordcount} / {self.session.target_wordcount}'
         self.ui.wordcount_value_label.setText(wc_text)
         self.ui.wordcount_progressBar.setProperty("value", perc_wc_achieved)
+    
+    def check_alarm_condition(self):
+        """
+        Change app colour scheme based on number of seconds since last
+        user interaction with text area
+
+        # TODO linear change from pink to red
+        """
+
+        seconds_since_last_interaction = time.time() - self.session.time_lastmodified_textarea
+
+        if seconds_since_last_interaction > self.session.seconds_allowed_since_lastmodified:
+            palette = make_alarm_palette()
+        else:
+            palette = make_darktheme_palette()
+
+        self.app.setPalette(palette)
+
+    def update_textchanged_time(self):
+        """
+        Record the time at which the user last changed the text
+        in the textarea
+        """
+
+        if self.session:
+            self.session.time_lastmodified_textarea = time.time()
 
 
 if __name__ == "__main__":

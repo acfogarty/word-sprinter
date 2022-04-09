@@ -4,11 +4,14 @@ from text import Text
 
 class Session:
 
+    # parameters for mapping slider to seconds
+    severity_slider_max_value = 100
+    max_seconds_grace_period = 30
+
     def __init__(self, minutes_per_sprint: int,
                  target_wordcount: int, severity: int,
                  text: Text):
 
-        self.severity = severity
         self.text = text
 
         self.minutes_per_sprint = minutes_per_sprint
@@ -22,6 +25,9 @@ class Session:
         self.target_wordcount = target_wordcount
         self.words_remaining = target_wordcount
         self.perc_wc_achieved = 0
+
+        self.time_lastmodified_textarea = time.time()
+        self.seconds_allowed_since_lastmodified = self.calc_grace_period(severity)
 
     def update_session_status(self, current_text_string: str):
 
@@ -50,3 +56,10 @@ class Session:
             self.perc_wc_achieved = int(self.text.added_wordcount / self.target_wordcount * 100)
         else:
             self.perc_wc_achieved = 0
+
+    def calc_grace_period(self, severity):
+        """
+        Map from slider value to seconds
+        """
+
+        return int(severity / self.severity_slider_max_value * self.max_seconds_grace_period)
