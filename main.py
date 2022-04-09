@@ -42,10 +42,16 @@ class Main:
     def update_status(self, current_text_string: str):
 
         current_total_wordcount, current_delta_wordcount = self.session.text.get_wordcount_info(current_text_string)
-        minutes_remaining = 7
+        minutes_remaining, perc_time_remaining = self.session.get_minutes_remaining()
+        perc_wc_achieved = self.session.get_perc_wc_achieved(current_delta_wordcount)
 
-        self.ui.time_remaining_value_label.setText(f'{minutes_remaining}:00')
-        self.ui.wordcount_value_label.setText(f'{current_delta_wordcount} / {self.session.target_wordcount}')
+        tr_text = f'{minutes_remaining}:00'
+        self.ui.time_remaining_value_label.setText(tr_text)
+        self.ui.time_remaining_progressBar.setProperty("value", perc_time_remaining)
+        wc_text = f'{current_delta_wordcount} / {self.session.target_wordcount}'
+        self.ui.wordcount_value_label.setText(wc_text)
+        self.ui.wordcount_progressBar.setProperty("value", perc_wc_achieved)
+
 
 if __name__ == "__main__":
 
