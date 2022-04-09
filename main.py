@@ -3,6 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from sprinter import Ui_MainWindow
 from session import Session
+from utils import make_darktheme_palette
 
 
 class Main:
@@ -32,8 +33,12 @@ class Main:
 if __name__ == "__main__":
 
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
+    # Force the style to be the same on all OSs:
+    app.setStyle("Fusion")
+    palette = make_darktheme_palette()
+    app.setPalette(palette)
 
+    MainWindow = QtWidgets.QMainWindow()
     main = Main()
     main.launch(MainWindow)
     MainWindow.show()
