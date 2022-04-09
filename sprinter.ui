@@ -105,7 +105,7 @@
        <item>
         <widget class="QProgressBar" name="wordcount_progressBar">
          <property name="value">
-          <number>24</number>
+          <number>0</number>
          </property>
         </widget>
        </item>
@@ -126,7 +126,7 @@
        <item>
         <widget class="QProgressBar" name="time_remaining_progressBar">
          <property name="value">
-          <number>24</number>
+          <number>100</number>
          </property>
         </widget>
        </item>

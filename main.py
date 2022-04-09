@@ -3,6 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from sprinter import Ui_MainWindow
 from session import Session
+from text import Text
 from utils import make_darktheme_palette
 
 
@@ -24,11 +25,27 @@ class Main:
 
     def start_session(self):
 
-        nminutes_per_sprint = self.ui.minutes_per_sprint_spinbox.value()
+        minutes_per_sprint = self.ui.minutes_per_sprint_spinbox.value()
+        target_wordcount = self.ui.target_wordcount_spinbox.value()
+        severity = self.ui.severity_slider.value()
 
-        self.text = Text(initial_text_string=initial_text_string)
-        self.session = Session(nminutes_per_sprint=nminutes_per_sprint)
+        initial_text_string = self.ui.textarea.toPlainText()
 
+        text = Text(initial_text_string=initial_text_string)
+        self.session = Session(minutes_per_sprint=minutes_per_sprint,
+                               target_wordcount=target_wordcount,
+                               severity=severity,
+                               text=text)
+
+        self.update_status(current_text_string=initial_text_string)
+
+    def update_status(self, current_text_string: str):
+
+        current_total_wordcount, current_delta_wordcount = self.session.text.get_wordcount_info(current_text_string)
+        minutes_remaining = 7
+
+        self.ui.time_remaining_value_label.setText(f'{minutes_remaining}:00')
+        self.ui.wordcount_value_label.setText(f'{current_delta_wordcount} / {self.session.target_wordcount}')
 
 if __name__ == "__main__":
 
