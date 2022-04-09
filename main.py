@@ -62,25 +62,11 @@ class SprinterMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.start_button.clicked.connect(self.start_session_in_thread)
         self.textarea.textChanged.connect(self.update_textchanged_time)
-        self.textarea.installEventFilter(self)
+
+        shortcut = QtWidgets.QShortcut(QtGui.QKeySequence("Ctrl+S"), self.textarea)
+        shortcut.activated.connect(self.backup_text_to_disk)
 
         self.session = None
-
-    # def eventFilter(self, source, event):
-    #     if event.type() == QtCore.QEvent.FocusIn and source is self.ledit_corteA:
-    #         print("A")
-    #         self.flag = 0
-    #     if event.type() == QtCore.QEvent.FocusIn and source is self.ledit_corteB:
-    #         print("B")
-    #         self.flag = 1
-    #     return super(MainWindow, self).eventFilter(source, event)
-
-    def eventFilter(self, obj, event):
-        if event.type() == QtCore.QEvent.KeyPress and obj is self.textarea:
-            if event.key() == QtCore.Qt.Key_Return and self.textarea.hasFocus():
-                print('Enter pressed')
-        return super().eventFilter(obj, event)
-        
 
     def start_session_in_thread(self):
 
@@ -201,6 +187,8 @@ class SprinterMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         with open('sprinter.bkp.txt', 'w') as f:
             f.write(current_text_string)
+
+        print('Backed up text to disk.')
 
 
 if __name__ == "__main__":
