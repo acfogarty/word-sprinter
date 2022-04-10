@@ -62,9 +62,9 @@ void Sprinter::startSessionInThread()
     connect(worker, SIGNAL(workFinished()), worker, SLOT(deleteLater()));
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 
-        //self.worker.progress.connect(self.update_status)
+    connect(worker, SIGNAL(progress()), this, SLOT(updateStatus()));
 
-        //self.update_status()
+    updateStatus();
 
     thread->start();
 
@@ -74,6 +74,36 @@ void Sprinter::startSessionInThread()
     //        lambda: self.start_button.setEnabled(True)
     //    )
 }
+
+void Sprinter::updateStatus() {
+
+        std::cout << "Update Status" << std::endl;
+
+        //if (self.session.seconds_remaining > 0) and (self.session.words_remaining > 0):
+        if (true) {
+
+            QString currentTextString = textarea->toPlainText();
+
+            // update all session variables
+            //session.updateSessionStatus(currentTextString);
+
+            // update text in labels in UI
+            //updateStatusBar();
+
+            //checkAlarmCondition();
+            start_button->setText("Wow");
+
+            return;
+        }
+
+        //if self.session.seconds_remaining <=0:
+        //    self.worker.stop()
+        //    print('Times up!')
+
+        //if self.session.words_remaining <= 0:
+        //    self.worker.stop()
+        //    print('Well done!')
+    }
 
 void Sprinter::updateTextchangedTime()
 {

@@ -13,14 +13,14 @@ class Sprinter : public QMainWindow, private Ui_MainWindow
 public:
     Sprinter(QMainWindow *parent = 0);
 
+public slots:
+    void updateStatus();
+
 private slots:
     void startSessionInThread();
     void updateTextchangedTime();
 
 private:
-    int minutes_per_sprint;
-    int target_wordcount;
-    int severity;
     //Session session;
 };
 
