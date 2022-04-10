@@ -15,24 +15,24 @@ Sprinter::Sprinter(QMainWindow *parent)
 
     setupUi(this);
 
-    //self.app = app
+    //app = app
 
     //# Force the style to be the same on all OSs:
-    //self.app.setStyle("Fusion")
+    //app.setStyle("Fusion")
 
     //palette = make_darktheme_palette()
-    //self.app.setPalette(palette)
+    //app.setPalette(palette)
 
-    //self.start_button.clicked.connect(self.start_session_in_thread)
-    //self.textarea.textChanged.connect(self.update_textchanged_time)
+    //start_button.clicked.connect(start_session_in_thread)
+    //textarea.textChanged.connect(update_textchanged_time)
 
     connect(start_button, &QPushButton::released,
             this, &Sprinter::startSessionInThread);
     connect(textarea, &QPlainTextEdit::textChanged,
             this, &Sprinter::updateTextchangedTime);
 
-    //shortcut = QtWidgets.QShortcut(QtGui.QKeySequence("Ctrl+S"), self.textarea)
-    //shortcut.activated.connect(self.backup_text_to_disk)
+    //shortcut = QtWidgets.QShortcut(QtGui.QKeySequence("Ctrl+S"), textarea)
+    //shortcut.activated.connect(backup_text_to_disk)
 }
 
 void Sprinter::startSessionInThread()
@@ -42,13 +42,11 @@ void Sprinter::startSessionInThread()
     int severity = severity_slider->value();
 
     QString initialTextString = textarea->toPlainText();
-    start_button->setText("Example");
-    std::cout << "Hello World!";
     Text text = Text(initialTextString);
-    //session = Session(minutes_per_sprint=minutes_per_sprint,
-    //                  target_wordcount=target_wordcount,
-    //                  severity=severity,
-    //                  text=text);
+    session = Session(minutes_per_sprint,
+                      target_wordcount,
+                      severity,
+                      text);
     QThread* thread = new QThread();
     Worker* worker = new Worker();
 
@@ -69,9 +67,9 @@ void Sprinter::startSessionInThread()
     thread->start();
 
     //    # Final resets
-    //    self.start_button.setEnabled(False)
-    //    self.thread.finished.connect(
-    //        lambda: self.start_button.setEnabled(True)
+    //    start_button.setEnabled(False)
+    //    thread.finished.connect(
+    //        lambda: start_button.setEnabled(True)
     //    )
 }
 
@@ -79,16 +77,15 @@ void Sprinter::updateStatus() {
 
         std::cout << "Update Status" << std::endl;
 
-        //if (self.session.seconds_remaining > 0) and (self.session.words_remaining > 0):
-        if (true) {
+        if ((session.seconds_remaining > 0) & (session.words_remaining > 0)) {
 
             QString currentTextString = textarea->toPlainText();
 
             // update all session variables
-            //session.updateSessionStatus(currentTextString);
+            session.update_session_status(currentTextString);
 
             // update text in labels in UI
-            //updateStatusBar();
+            updateStatusBar();
 
             //checkAlarmCondition();
             start_button->setText("Wow");
@@ -96,17 +93,35 @@ void Sprinter::updateStatus() {
             return;
         }
 
-        //if self.session.seconds_remaining <=0:
-        //    self.worker.stop()
+        //if session.seconds_remaining <=0:
+        //    worker.stop()
         //    print('Times up!')
 
-        //if self.session.words_remaining <= 0:
-        //    self.worker.stop()
+        //if session.words_remaining <= 0:
+        //    worker.stop()
         //    print('Well done!')
     }
 
+void Sprinter::updateStatusBar() {
+
+    //    """
+    //    Update text in labels in the status bar in the UI.
+    //    """
+
+        int addedWordcount = session.text.addedWordcount;
+        int minutes_remaining = session.minutes_remaining;
+        int perc_time_remaining = session.perc_time_remaining;
+        int perc_wc_achieved = session.perc_wc_achieved;
+
+        QString tr_text = QString("%1:00").arg(minutes_remaining);
+        time_remaining_value_label->setText(tr_text);
+        time_remaining_progressBar->setProperty("value", perc_time_remaining);
+        QString wc_text = QString("%1 / %2").arg(addedWordcount).arg(session.target_wordcount);
+        wordcount_value_label->setText(wc_text);
+        wordcount_progressBar->setProperty("value", perc_wc_achieved);
+}
+
 void Sprinter::updateTextchangedTime()
 {
-    std::cout << "Hello World!";
     start_button->setText("Yay");
 }

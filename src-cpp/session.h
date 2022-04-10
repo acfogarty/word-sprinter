@@ -8,6 +8,7 @@ class Session
 {
 
 public:
+    Session();
     Session(int minutes_per_sprint, int target_wordcount,
                  int severity, Text text);
 

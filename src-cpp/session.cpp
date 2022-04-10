@@ -5,6 +5,7 @@
 #include "text.h"
 
 
+Session::Session() {}
 Session::Session(int _minutes_per_sprint, int _target_wordcount,
                  int severity, Text _text) {
 

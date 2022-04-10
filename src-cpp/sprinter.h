@@ -5,6 +5,7 @@
 #include <QMainWindow>
 
 #include "ui_sprintermainwindow.h"
+#include "session.h"
 
 class Sprinter : public QMainWindow, private Ui_MainWindow
 {
@@ -21,7 +22,8 @@ private slots:
     void updateTextchangedTime();
 
 private:
-    //Session session;
+    Session session;
+    void updateStatusBar();
 };
 
 #endif
