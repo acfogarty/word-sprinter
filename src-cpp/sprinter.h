@@ -2,13 +2,16 @@
 #define SPRINTER_H
 
 #include <QWidget>
+#include <QMainWindow>
 
-class Sprinter : public QWidget
+#include "ui_sprintermainwindow.h"
+
+class Sprinter : public QMainWindow, private Ui_MainWindow
 {
     Q_OBJECT
 
 public:
-    Sprinter(QWidget *parent = 0);
+    Sprinter(QMainWindow *parent = 0);
 
 private:
     double sumInMemory;
