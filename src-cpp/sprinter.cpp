@@ -1,7 +1,10 @@
 #include <iostream>
 #include <string>
 #include <QtWidgets>
+#include <QShortcut>
+#include <QKeySequence>
 #include <QMainWindow>
+#include <QDebug>
 
 #include <cmath>
 
@@ -20,8 +23,8 @@ Sprinter::Sprinter(QMainWindow *parent)
     connect(textarea, &QTextEdit::textChanged,
             this, &Sprinter::updateTextchangedTime);
 
-    //shortcut = QtWidgets.QShortcut(QtGui.QKeySequence("Ctrl+S"), textarea)
-    //shortcut.activated.connect(backup_text_to_disk)
+    QShortcut* shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this);
+    connect(shortcut, &QShortcut::activated, this, &Sprinter::backup_text_to_disk);
 }
 
 void Sprinter::startSessionInThread()
@@ -138,4 +141,23 @@ void Sprinter::updateTextchangedTime()
     */
 
     session.time_lastmodified_textarea = time(NULL);
+}
+
+void Sprinter::backup_text_to_disk()
+{
+/*
+        """
+        Save contents of textarea to temporary file on disk
+        """
+*/
+
+        QString current_text_string = textarea->toPlainText();
+
+        // TODO set path to write to instead of hard coding
+        QFile file("/Users/aoife/sprinter.bkp.txt");
+        file.open(QIODevice::WriteOnly);
+        file.write(current_text_string.toUtf8());
+        file.close();
+
+        qDebug() << "Backed up text to disk.";
 }

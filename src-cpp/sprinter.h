@@ -21,9 +21,10 @@ public slots:
 private slots:
     void startSessionInThread();
     void updateTextchangedTime();
+    void backup_text_to_disk();
 
 private:
-    Session session;     
+    Session session;
     Worker* worker;
     void updateStatusBar();
     void checkAlarmCondition();
