@@ -28,7 +28,7 @@ Sprinter::Sprinter(QMainWindow *parent)
 
     connect(start_button, &QPushButton::released,
             this, &Sprinter::startSessionInThread);
-    connect(textarea, &QPlainTextEdit::textChanged,
+    connect(textarea, &QTextEdit::textChanged,
             this, &Sprinter::updateTextchangedTime);
 
     //shortcut = QtWidgets.QShortcut(QtGui.QKeySequence("Ctrl+S"), textarea)
@@ -48,7 +48,7 @@ void Sprinter::startSessionInThread()
                       severity,
                       text);
     QThread* thread = new QThread();
-    Worker* worker = new Worker();
+    worker = new Worker();
 
     // move the worker object to the thread BEFORE connecting any signal/slots
     worker->moveToThread(thread);
@@ -92,13 +92,15 @@ void Sprinter::updateStatus() {
             return;
         }
 
-        //if session.seconds_remaining <=0:
-        //    worker.stop()
-        //    print('Times up!')
+        if (session.seconds_remaining <=0) {
+            std::cout << "Times up!";
+            worker->stop();
+        }
 
-        //if session.words_remaining <= 0:
-        //    worker.stop()
-        //    print('Well done!')
+        if (session.words_remaining <= 0) {
+            std::cout << "Well done!";
+            worker->stop();
+        }
     }
 
 void Sprinter::updateStatusBar() {
@@ -134,12 +136,11 @@ void Sprinter::checkAlarmCondition() {
     if (seconds_since_last_interaction > session.seconds_allowed_since_lastmodified) {
 
         //palette = make_alarm_palette()
-        textarea->setStyleSheet("QTextEdit { background-color: rgb(255, 250, 205); }");
+        textarea->setStyleSheet("QTextEdit { background-color: rgb(255, 0, 0); color: black;}");
         std::cout << "alarm!";
     }
     else {
-        //palette = make_darktheme_palette()
-    start_button->setText("Bad");
+        textarea->setStyleSheet("QTextEdit { background-color: rgb(0, 0, 0); color: white;}");
     }
 
     //self.app.setPalette(palette)

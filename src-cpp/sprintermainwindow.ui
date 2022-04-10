@@ -91,7 +91,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QPlainTextEdit" name="textarea">
+      <widget class="QTextEdit" name="textarea">
        <property name="plainText">
         <string>Write here...</string>
        </property>

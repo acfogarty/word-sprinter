@@ -1,3 +1,6 @@
+#ifndef WORKER_H
+#define WORKER_H
+
 #include <QObject>
 #include <QThread>
 
@@ -22,3 +25,5 @@ signals:
     void workFinished();
     void progress();
 };
+
+#endif

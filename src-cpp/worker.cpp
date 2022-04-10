@@ -14,13 +14,15 @@ Worker::Worker() : QObject()
 }
 
 
-    //def stop(self):
+void Worker::stop() {
     //    """
     //    Switches infinite while loop condition to False
     //    """
     //    self._mutex.lock()
-    //    self._running = False
+    _running = false;
     //     self._mutex.unlock()
+
+}
 
     bool Worker::running() {
 

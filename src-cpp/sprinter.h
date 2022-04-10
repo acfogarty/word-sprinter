@@ -6,6 +6,7 @@
 
 #include "ui_sprintermainwindow.h"
 #include "session.h"
+#include "worker.h"
 
 class Sprinter : public QMainWindow, private Ui_MainWindow
 {
@@ -22,7 +23,8 @@ private slots:
     void updateTextchangedTime();
 
 private:
-    Session session;
+    Session session;     
+    Worker* worker;
     void updateStatusBar();
     void checkAlarmCondition();
 };
