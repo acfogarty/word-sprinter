@@ -7,6 +7,7 @@ class Text
 {
 
 public:
+    Text();
     Text(QString initialTextString);
 
 public:
