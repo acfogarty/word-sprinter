@@ -24,6 +24,7 @@ private slots:
 private:
     Session session;
     void updateStatusBar();
+    void checkAlarmCondition();
 };
 
 #endif

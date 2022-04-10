@@ -87,8 +87,7 @@ void Sprinter::updateStatus() {
             // update text in labels in UI
             updateStatusBar();
 
-            //checkAlarmCondition();
-            start_button->setText("Wow");
+            checkAlarmCondition();
 
             return;
         }
@@ -120,8 +119,38 @@ void Sprinter::updateStatusBar() {
         wordcount_value_label->setText(wc_text);
         wordcount_progressBar->setProperty("value", perc_wc_achieved);
 }
+    
+void Sprinter::checkAlarmCondition() {
+
+/*        """
+        Change app colour scheme based on number of seconds since last
+        user interaction with text area
+
+        # TODO linear change from pink to red
+        """*/
+
+    int seconds_since_last_interaction = time(NULL) - session.time_lastmodified_textarea;
+
+    if (seconds_since_last_interaction > session.seconds_allowed_since_lastmodified) {
+
+        //palette = make_alarm_palette()
+        textarea->setStyleSheet("QTextEdit { background-color: rgb(255, 250, 205); }");
+        std::cout << "alarm!";
+    }
+    else {
+        //palette = make_darktheme_palette()
+    start_button->setText("Bad");
+    }
+
+    //self.app.setPalette(palette)
+}
 
 void Sprinter::updateTextchangedTime()
 {
-    start_button->setText("Yay");
+/*        """
+        Record the time at which the user last changed the text
+        in the textarea
+        """*/
+
+    session.time_lastmodified_textarea = time(NULL);
 }

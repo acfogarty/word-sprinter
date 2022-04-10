@@ -1,4 +1,6 @@
 #include <QString>
+#include <QStringList>
+#include <QRegularExpression>
 #include "text.h"
 
 Text::Text()
@@ -22,10 +24,11 @@ void Text::updateWordcountInfo(QString currentTextString) {
 int Text::countWords(QString textString) {
     // """Counts words using same method as linux wc"""
 
-    // TODO
-    //wc = len(text_string.split())
+    QStringList words = textString.split(QRegularExpression("\\s+"),
+                                         Qt::SkipEmptyParts);
+    int wc = words.length();
 
-    return 5;
+    return wc;
 }
 
 int Text::getAddedWordcount() {
