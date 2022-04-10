@@ -7,6 +7,7 @@
 
 #include "sprinter.h"
 #include "text.h"
+#include "worker.h"
 
 Sprinter::Sprinter(QMainWindow *parent)
     : QMainWindow(parent)
@@ -40,14 +41,38 @@ void Sprinter::startSessionInThread()
     int target_wordcount = target_wordcount_spinbox->value();
     int severity = severity_slider->value();
 
-    QString initial_text_string = textarea->toPlainText();
+    QString initialTextString = textarea->toPlainText();
     start_button->setText("Example");
     std::cout << "Hello World!";
-    Text text = Text(initial_text_string=initial_text_string);
+    Text text = Text(initialTextString);
     //session = Session(minutes_per_sprint=minutes_per_sprint,
     //                  target_wordcount=target_wordcount,
     //                  severity=severity,
     //                  text=text);
+    QThread* thread = new QThread();
+    Worker* worker = new Worker();
+
+    // move the worker object to the thread BEFORE connecting any signal/slots
+    worker->moveToThread(thread);
+
+    connect(thread, SIGNAL(started()), worker, SLOT(runSession()));
+    connect(worker, SIGNAL(workFinished()), thread, SLOT(quit()));
+
+    // automatically delete thread and worker object when work is done:
+    connect(worker, SIGNAL(workFinished()), worker, SLOT(deleteLater()));
+    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+
+        //self.worker.progress.connect(self.update_status)
+
+        //self.update_status()
+
+    thread->start();
+
+    //    # Final resets
+    //    self.start_button.setEnabled(False)
+    //    self.thread.finished.connect(
+    //        lambda: self.start_button.setEnabled(True)
+    //    )
 }
 
 void Sprinter::updateTextchangedTime()

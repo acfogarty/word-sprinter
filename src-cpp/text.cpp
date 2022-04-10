@@ -1,9 +1,10 @@
+#include <QString>
 #include "text.h"
 
-Text::Text(QString initial_text_string)
+Text::Text(QString initialTextString)
 {
 
-    initialWordcount = countWords(initial_text_string);
+    initialWordcount = countWords(initialTextString);
     currentWordcount = initialWordcount;
     addedWordcount = getAddedWordcount();
 
