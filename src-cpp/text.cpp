@@ -34,4 +34,3 @@ int Text::countWords(QString textString) {
 int Text::getAddedWordcount() {
     return currentWordcount - initialWordcount;
 }
-

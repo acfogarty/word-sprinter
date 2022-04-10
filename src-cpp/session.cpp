@@ -35,11 +35,11 @@ max_seconds_grace_period = 30;
 
 void Session::update_session_status(QString current_text_string) {
 
-        text.updateWordcountInfo(current_text_string);
+    text.updateWordcountInfo(current_text_string);
 
-        calc_minutes_remaining();
+    calc_minutes_remaining();
 
-        calc_word_stats();
+    calc_word_stats();
 }
 
 void Session::calc_minutes_remaining() {
@@ -50,9 +50,7 @@ void Session::calc_minutes_remaining() {
 
     if (minutes_per_sprint > 0) {
         perc_time_remaining = int(minutes_remaining / minutes_per_sprint * 100);
-    }
-    else {
-
+    } else {
         perc_time_remaining = 0;
     }
 
@@ -63,11 +61,9 @@ void Session::calc_word_stats() {
     words_remaining = target_wordcount - text.addedWordcount;
 
     if (target_wordcount > 0) {
-
         perc_wc_achieved = int(text.addedWordcount / target_wordcount * 100);
     }
     else {
-
         perc_wc_achieved = 0;
     }
 }
@@ -75,5 +71,5 @@ void Session::calc_word_stats() {
 int Session::calc_grace_period(int severity){
 //        Map from slider value to seconds
 
-        return int(severity / severity_slider_max_value * max_seconds_grace_period);
+    return int(severity / severity_slider_max_value * max_seconds_grace_period);
 }

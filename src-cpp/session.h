@@ -29,14 +29,15 @@ public:
 
     int time_lastmodified_textarea;
     int seconds_allowed_since_lastmodified;
-void update_session_status(QString current_text_string);
-void calc_minutes_remaining();
-void calc_word_stats();
-int calc_grace_period(int severity);
-int severity_slider_max_value;
-int max_seconds_grace_period;
+    void update_session_status(QString current_text_string);
+    void calc_minutes_remaining();
+    void calc_word_stats();
+    int calc_grace_period(int severity);
+    int severity_slider_max_value;
+    int max_seconds_grace_period;
 
 private:
+    //TODO transfer private variables here
 };
 
 #endif
