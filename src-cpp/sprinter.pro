@@ -1,7 +1,9 @@
 QT += widgets
 
-HEADERS       = sprinter.h 
+HEADERS       = sprinter.h \
+                text.h
 SOURCES       = sprinter.cpp \
+                text.cpp \
                 main.cpp
 
 FORMS = sprintermainwindow.ui
