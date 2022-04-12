@@ -20,7 +20,7 @@ Sprinter::Sprinter(QMainWindow *parent)
 
     connect(start_button, &QPushButton::released,
             this, &Sprinter::startSessionInThread);
-    connect(textarea, &QTextEdit::textChanged,
+    connect(textarea, &QPlainTextEdit::textChanged,
             this, &Sprinter::updateTextchangedTime);
 
     QShortcut* shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this);
@@ -106,11 +106,11 @@ void Sprinter::updateStatusBar() {
 
     QString tr_text = QString("%1:00").arg(minutes_remaining);
     time_remaining_value_label->setText(tr_text);
-    time_remaining_progressBar->setProperty("value", perc_time_remaining);
+    time_remaining_progressBar->setValue(perc_time_remaining);
 
     QString wc_text = QString("%1 / %2").arg(addedWordcount).arg(session.target_wordcount);
     wordcount_value_label->setText(wc_text);
-    wordcount_progressBar->setProperty("value", perc_wc_achieved);
+    wordcount_progressBar->setValue(perc_wc_achieved);
 }
     
 void Sprinter::checkAlarmCondition() {
@@ -125,10 +125,9 @@ user interaction with text area
     int seconds_since_last_interaction = time(NULL) - session.time_lastmodified_textarea;
 
     if (seconds_since_last_interaction > session.seconds_allowed_since_lastmodified) {
-        textarea->setStyleSheet("QTextEdit { background-color: rgb(255, 0, 0); color: black;}");
-        std::cout << "alarm!";
+        textarea->setStyleSheet("QPlainTextEdit { background-color: rgb(255, 0, 0); color: black;}");
     } else {
-        textarea->setStyleSheet("QTextEdit { background-color: rgb(0, 0, 0); color: white;}");
+        textarea->setStyleSheet("QPlainTextEdit { background-color: rgb(0, 0, 0); color: white;}");
     }
 
 }

@@ -57,6 +57,9 @@
          </item>
          <item row="1" column="1">
           <widget class="QSpinBox" name="target_wordcount_spinbox">
+           <property name="maximum">
+            <number>500</number>
+           </property>
            <property name="value">
             <number>10</number>
            </property>
@@ -91,7 +94,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QTextEdit" name="textarea">
+      <widget class="QPlainTextEdit" name="textarea">
        <property name="plainText">
         <string>Write here...</string>
        </property>
