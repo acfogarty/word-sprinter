@@ -28,6 +28,9 @@ private:
     Worker* worker;
     void updateStatusBar();
     void checkAlarmCondition();
+    int linearColorMap(int seconds, int colorMin, int colorMax,
+                       int secondsStartChange, int secondsChangePeriod);
+    int calcBrightness(int red, int green, int blue);
 };
 
 #endif

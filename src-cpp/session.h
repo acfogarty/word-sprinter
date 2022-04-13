@@ -27,14 +27,20 @@ public:
     int words_remaining;
     int perc_wc_achieved;
 
-    int time_lastmodified_textarea;
-    int seconds_allowed_since_lastmodified;
     void update_session_status(QString current_text_string);
     void calc_minutes_remaining();
     void calc_word_stats();
-    int calc_grace_period(int severity);
+
+    // time since textarea was last modified
+    int time_lastmodified_textarea;
+    // during the grace period, the textarea background retains its original color
+    int seconds_grace_period;
+    // grace period when the slider is set to maximum severity
+    int seconds_grace_period_at_max_slider;
+    // during the color change period, the textarea changes to red
+    int seconds_color_change;
     int severity_slider_max_value;
-    int max_seconds_grace_period;
+    int calc_grace_period(int severity);
 
 private:
     //TODO transfer private variables here

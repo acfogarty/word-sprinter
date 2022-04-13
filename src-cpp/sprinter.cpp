@@ -119,17 +119,67 @@ void Sprinter::checkAlarmCondition() {
 Change app colour scheme based on number of seconds since last
 user interaction with text area
 
-# TODO linear change from pink to red
+Seconds_since_last_interaction < seconds_allows_since
+
 """*/
 
     int seconds_since_last_interaction = time(NULL) - session.time_lastmodified_textarea;
+    int red;
+    int green;
+    int blue;
+    int redmin = 21;
+    int redmax = 255;
+    int greenmin = 21;
+    int greenmax = 0;
+    int bluemin = 21;
+    int bluemax = 0;
+    QString textcolor;
 
-    if (seconds_since_last_interaction > session.seconds_allowed_since_lastmodified) {
-        textarea->setStyleSheet("QPlainTextEdit { background-color: rgb(255, 0, 0); color: black;}");
+    // during the grace period, the textarea background retains its original color
+    // during the color change period, the textarea changes to red
+
+    red = linearColorMap(seconds_since_last_interaction, redmin, redmax,
+                         session.seconds_grace_period, session.seconds_color_change);
+    green = linearColorMap(seconds_since_last_interaction, greenmin, greenmax,
+                         session.seconds_grace_period, session.seconds_color_change);
+    blue = linearColorMap(seconds_since_last_interaction, bluemin, bluemax,
+                         session.seconds_grace_period, session.seconds_color_change);
+
+    int brightness = calcBrightness(red, green, blue);
+    qDebug() << "brightness: " << brightness;
+
+    if (brightness < 60) {
+        textcolor = "white";
     } else {
-        textarea->setStyleSheet("QPlainTextEdit { background-color: rgb(0, 0, 0); color: white;}");
+        textcolor = "black";
     }
 
+    QString stylesheet = QString("QPlainTextEdit { background-color: rgb(%1, %2, %3); color: %4}").arg(red).arg(green).arg(blue).arg(textcolor);
+    textarea->setStyleSheet(stylesheet);
+}
+
+int Sprinter::calcBrightness(int red, int green, int blue) {
+    return (red + red + blue + green + green + green) / 6;
+}
+
+int Sprinter::linearColorMap(int seconds, int colorMin, int colorMax,
+                              int secondsStartChange, int secondsChangePeriod) {
+/* 0 to secondsStartChange seconds: color is colorMin
+    secondsStartChange to secondsStartChange+secondsChangePeriod: linear color change
+    > secondsStartChange+secondsChangePeriod seconds: color is colorMax */
+
+    if (seconds < secondsStartChange) {
+        return colorMin;
+    }
+
+    if (seconds > secondsStartChange + secondsChangePeriod) {
+        return colorMax;
+    }
+
+    int slope = (colorMax - colorMin) / (float) secondsChangePeriod;
+    int intercept = colorMin - slope * secondsStartChange;
+
+    return (int) (slope * seconds + intercept);
 }
 
 void Sprinter::updateTextchangedTime()
