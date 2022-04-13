@@ -1,1 +1,1 @@
-pyuic5 ../src-common/sprinter.ui -o sprinter.py
+pyuic5 ../src-cpp/sprintermainwindow.ui -o sprinter.py

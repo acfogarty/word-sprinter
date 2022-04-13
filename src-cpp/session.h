@@ -4,13 +4,12 @@
 #include <QString>
 #include "text.h"
 
-class Session
-{
+class Session {
 
 public:
     Session();
     Session(int minutes_per_sprint, int target_wordcount,
-                 int severity, Text text);
+            int severity, Text text);
 
 public:
     Text text;
@@ -40,7 +39,7 @@ public:
     // during the color change period, the textarea changes to red
     int seconds_color_change;
     int severity_slider_max_value;
-    int calc_grace_period(int severity);
+    void calc_grace_period(int severity);
 
 private:
     //TODO transfer private variables here

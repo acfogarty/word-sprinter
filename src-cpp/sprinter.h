@@ -8,8 +8,7 @@
 #include "session.h"
 #include "worker.h"
 
-class Sprinter : public QMainWindow, private Ui_MainWindow
-{
+class Sprinter : public QMainWindow, private Ui_MainWindow {
     Q_OBJECT
 
 public:

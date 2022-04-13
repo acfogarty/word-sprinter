@@ -12,9 +12,7 @@
 #include "text.h"
 #include "worker.h"
 
-Sprinter::Sprinter(QMainWindow *parent)
-    : QMainWindow(parent)
-{
+Sprinter::Sprinter(QMainWindow *parent) : QMainWindow(parent) {
 
     setupUi(this);
 
@@ -27,8 +25,8 @@ Sprinter::Sprinter(QMainWindow *parent)
     connect(shortcut, &QShortcut::activated, this, &Sprinter::backup_text_to_disk);
 }
 
-void Sprinter::startSessionInThread()
-{
+void Sprinter::startSessionInThread() {
+
     int minutes_per_sprint = minutes_per_sprint_spinbox->value();
     int target_wordcount = target_wordcount_spinbox->value();
     int severity = severity_slider->value();
@@ -94,10 +92,8 @@ void Sprinter::updateStatus() {
     }
 }
 
+// Update text in labels in the status bar in the UI.
 void Sprinter::updateStatusBar() {
-//    """
-//    Update text in labels in the status bar in the UI.
-//    """
 
     int addedWordcount = session.text.addedWordcount;
     int minutes_remaining = session.minutes_remaining;
@@ -113,30 +109,29 @@ void Sprinter::updateStatusBar() {
     wordcount_progressBar->setValue(perc_wc_achieved);
 }
     
+// Change app colour scheme based on number of seconds since last
+// user interaction with text area.
+// During the grace period, the textarea background retains its original color.
+// During the color change period, the textarea changes to red.
 void Sprinter::checkAlarmCondition() {
-/*
-"""
-Change app colour scheme based on number of seconds since last
-user interaction with text area
 
-Seconds_since_last_interaction < seconds_allows_since
-
-"""*/
-
-    int seconds_since_last_interaction = time(NULL) - session.time_lastmodified_textarea;
     int red;
     int green;
     int blue;
+
+    // dark grey
     int redmin = 21;
-    int redmax = 255;
     int greenmin = 21;
-    int greenmax = 0;
     int bluemin = 21;
+
+    // bright red
+    int redmax = 255;
+    int greenmax = 0;
     int bluemax = 0;
+
     QString textcolor;
 
-    // during the grace period, the textarea background retains its original color
-    // during the color change period, the textarea changes to red
+    int seconds_since_last_interaction = time(NULL) - session.time_lastmodified_textarea;
 
     red = linearColorMap(seconds_since_last_interaction, redmin, redmax,
                          session.seconds_grace_period, session.seconds_color_change);
@@ -146,7 +141,6 @@ Seconds_since_last_interaction < seconds_allows_since
                          session.seconds_grace_period, session.seconds_color_change);
 
     int brightness = calcBrightness(red, green, blue);
-    qDebug() << "brightness: " << brightness;
 
     if (brightness < 60) {
         textcolor = "white";
@@ -162,11 +156,11 @@ int Sprinter::calcBrightness(int red, int green, int blue) {
     return (red + red + blue + green + green + green) / 6;
 }
 
+// 0 to secondsStartChange seconds: color is colorMin
+// secondsStartChange to secondsStartChange+secondsChangePeriod: linear color change
+// seconds > secondsStartChange+secondsChangePeriod seconds: color is colorMax
 int Sprinter::linearColorMap(int seconds, int colorMin, int colorMax,
-                              int secondsStartChange, int secondsChangePeriod) {
-/* 0 to secondsStartChange seconds: color is colorMin
-    secondsStartChange to secondsStartChange+secondsChangePeriod: linear color change
-    > secondsStartChange+secondsChangePeriod seconds: color is colorMax */
+                             int secondsStartChange, int secondsChangePeriod) {
 
     if (seconds < secondsStartChange) {
         return colorMin;
@@ -182,31 +176,24 @@ int Sprinter::linearColorMap(int seconds, int colorMin, int colorMax,
     return (int) (slope * seconds + intercept);
 }
 
-void Sprinter::updateTextchangedTime()
-{
-    /*
-    Record the time at which the user last changed the text
-    in the textarea
-    */
+// Record the time at which the user last changed the text
+// in the textarea
+void Sprinter::updateTextchangedTime() {
 
     session.time_lastmodified_textarea = time(NULL);
+
 }
 
-void Sprinter::backup_text_to_disk()
-{
-/*
-        """
-        Save contents of textarea to temporary file on disk
-        """
-*/
+// Save contents of textarea to temporary file on disk
+void Sprinter::backup_text_to_disk() {
 
-        QString current_text_string = textarea->toPlainText();
+    QString current_text_string = textarea->toPlainText();
 
-        // TODO set path to write to instead of hard coding
-        QFile file("/Users/aoife/sprinter.bkp.txt");
-        file.open(QIODevice::WriteOnly);
-        file.write(current_text_string.toUtf8());
-        file.close();
+    // TODO set path to write to instead of hard coding
+    QFile file("/Users/aoife/sprinter.bkp.txt");
+    file.open(QIODevice::WriteOnly);
+    file.write(current_text_string.toUtf8());
+    file.close();
 
-        qDebug() << "Backed up text to disk.";
+    qDebug() << "Backed up text to disk.";
 }

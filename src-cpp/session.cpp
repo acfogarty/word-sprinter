@@ -9,11 +9,11 @@ Session::Session() {}
 Session::Session(int _minutes_per_sprint, int _target_wordcount,
                  int severity, Text _text) {
 
-// parameters for mapping slider to seconds
-// TODO make constant
-severity_slider_max_value = 100.0;
-seconds_grace_period_at_max_slider = 30.0;
-seconds_color_change = 10;
+    // parameters for mapping slider to seconds
+    // TODO make constant
+    severity_slider_max_value = 100.0;
+    seconds_grace_period_at_max_slider = 30.0;
+    seconds_color_change = 10;
 
     text = _text;
 
@@ -69,8 +69,8 @@ void Session::calc_word_stats() {
     }
 }
 
-int Session::calc_grace_period(int severity){
-//        Map from slider value to seconds
+// Map from slider value to seconds
+void Session::calc_grace_period(int severity) {
 
     seconds_grace_period = int((float)severity / severity_slider_max_value * seconds_grace_period_at_max_slider);
 }

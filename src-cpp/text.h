@@ -3,8 +3,7 @@
 
 #include <QString>
 
-class Text
-{
+class Text {
 
 public:
     Text();

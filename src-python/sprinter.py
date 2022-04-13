@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '../src-common/sprinter.ui'
+# Form implementation generated from reading ui file '../src-cpp/sprintermainwindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -37,6 +37,7 @@ class Ui_MainWindow(object):
         self.target_wordcount_label.setObjectName("target_wordcount_label")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.target_wordcount_label)
         self.target_wordcount_spinbox = QtWidgets.QSpinBox(self.layoutWidget)
+        self.target_wordcount_spinbox.setMaximum(500)
         self.target_wordcount_spinbox.setProperty("value", 10)
         self.target_wordcount_spinbox.setObjectName("target_wordcount_spinbox")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.target_wordcount_spinbox)

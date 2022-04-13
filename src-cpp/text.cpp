@@ -3,11 +3,9 @@
 #include <QRegularExpression>
 #include "text.h"
 
-Text::Text()
-{}
+Text::Text() {}
 
-Text::Text(QString initialTextString)
-{
+Text::Text(QString initialTextString) {
 
     initialWordcount = countWords(initialTextString);
     currentWordcount = initialWordcount;
@@ -21,8 +19,8 @@ void Text::updateWordcountInfo(QString currentTextString) {
     addedWordcount = getAddedWordcount();
 }
 
+// Counts words using same method as linux wc
 int Text::countWords(QString textString) {
-    // """Counts words using same method as linux wc"""
 
     QStringList words = textString.split(QRegularExpression("\\s+"),
                                          Qt::SkipEmptyParts);
