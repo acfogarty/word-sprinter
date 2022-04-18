@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>689</width>
-    <height>600</height>
+    <width>853</width>
+    <height>788</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>11</x>
-      <y>11</y>
-      <width>651</width>
-      <height>541</height>
+      <x>20</x>
+      <y>0</y>
+      <width>821</width>
+      <height>731</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -95,6 +95,11 @@
      </item>
      <item>
       <widget class="QPlainTextEdit" name="textarea">
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
        <property name="plainText">
         <string>Write here...</string>
        </property>
@@ -154,7 +159,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>689</width>
+     <width>853</width>
      <height>24</height>
     </rect>
    </property>

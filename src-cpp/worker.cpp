@@ -33,7 +33,7 @@ bool Worker::running() {
 void Worker::runSession() {
 
     while (running()) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000)); // sleep for 1 second
+        std::this_thread::sleep_for(std::chrono::milliseconds(5000)); // sleep for 1 second
         emit progress();
     }
     emit workFinished();
